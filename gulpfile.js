@@ -3,8 +3,13 @@ var eslint = require('gulp-eslint')
 var mocha = require('gulp-mocha')
 
 gulp.task('test', function () {
-    gulp.src('test/*_test.js')
-        .pipe(mocha())
+    gulp.src([
+        'test/optionsAdapter_test.js',
+        'test/getChunkOfTokens_test.js',
+        'test/parser_test.js',
+        'test/formatter_test.js'
+    ])
+    .pipe(mocha())
 })
 
 gulp.task('lint', function () {

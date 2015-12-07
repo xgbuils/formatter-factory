@@ -1,17 +1,19 @@
 var chai = require('chai')
 var expect = chai.expect
 var parser = require('../src/parser')
-var optionsAdapter = require('../src/optionsAdapter')
 
 describe('parser', function () {
     context('given configuration with method references', function () {
-        var config = optionsAdapter({
-            oo: '@fooMethod',
-            o: '@getBar'
-        })
+        var options = {
+            rules: {
+                oo: '@fooMethod',
+                o: '@getBar'
+            },
+            regexp: /(oo|o)/g
+        }
 
         it('returns string token if string is \'oo\'', function () {
-            var tokens = parser('oo', config)
+            var tokens = parser('oo', options)
             expect(tokens).to.be.deep.equal([{
                 type: 'format',
                 value: 'fooMethod',
@@ -20,7 +22,7 @@ describe('parser', function () {
         })
 
         it('returns string tokenif string is \'fooobaro\'', function () {
-            var tokens = parser('fooobaro', config)
+            var tokens = parser('fooobaro', options)
             expect(tokens).to.be.deep.equal([{
                 type: 'string',
                 value: 'f',
@@ -35,15 +37,7 @@ describe('parser', function () {
                 next: 4
             }, {
                 type: 'string',
-                value: 'b',
-                next: 5
-            }, {
-                type: 'string',
-                value: 'a',
-                next: 6
-            }, {
-                type: 'string',
-                value: 'r',
+                value: 'bar',
                 next: 7
             }, {
                 type: 'format',
@@ -54,15 +48,18 @@ describe('parser', function () {
     })
 
     context('given configuration with substitutions', function () {
-        var config = optionsAdapter({
-            oo: '@fooMethod',
-            o: '@getBar',
-            a: 'oo-o',
-            b: 'ooo'
-        })
+        var options = {
+            rules: {
+                oo: '@fooMethod',
+                o: '@getBar',
+                a: 'oo-o',
+                b: 'ooo'
+            },
+            regexp: /(oo|o|b|a)/g
+        }
 
-        it('returns string token if string is \'oo\'', function () {
-            var tokens = parser('a', config)
+        it('returns string token if string is \'a\'', function () {
+            var tokens = parser('a', options)
             expect(tokens).to.be.deep.equal([{
                 type: 'substitution',
                 value: 'oo-o',
@@ -71,7 +68,7 @@ describe('parser', function () {
         })
 
         it('returns strings, format and substitution tokens if string is \'fooobaro\'', function () {
-            var tokens = parser('fooobaro', config)
+            var tokens = parser('fooobaro', options)
             expect(tokens).to.be.deep.equal([{
                 type: 'string',
                 value: 'f',

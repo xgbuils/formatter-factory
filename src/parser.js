@@ -1,15 +1,16 @@
-var getToken = require('./getToken')
+var getChunkOfTokens = require('./getChunkOfTokens')
 
-function parser (string, config) {
+function parser (string, options) {
     var i = 0
     var tokens = []
     while (true) {
-        var token = getToken(string, i, config)
-        if (token === undefined) {
+        var chunkOfTokens = getChunkOfTokens(string, i, options)
+        if (chunkOfTokens.length === 0) {
             break
         }
-        tokens.push(token)
-        i = token.next
+        var last = chunkOfTokens.length - 1
+        tokens.push.apply(tokens, chunkOfTokens)
+        i = chunkOfTokens[last].next
     }
     return tokens
 }

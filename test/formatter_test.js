@@ -7,13 +7,15 @@ describe('Formatter', function () {
     context('given configuration and price string builder', function () {
         var priceStringBuilder = givenPriceStringBuilder('.', '$')
         var config = {
-            ii: '@getIntegerPart',
-            dd: '@getDecimalPart',
-            s: '@getSeparator',
-            c: '@getCurrency',
-            ff: 'iisdd',
-            FF: 'ddsii',
-            pp: 'ff c'
+            rules: {
+                ii: '@getIntegerPart',
+                dd: '@getDecimalPart',
+                s: '@getSeparator',
+                c: '@getCurrency',
+                ff: 'iisdd',
+                FF: 'ddsii',
+                pp: 'ff c'
+            }
         }
         var formatter = new Formatter(config, priceStringBuilder)
 
