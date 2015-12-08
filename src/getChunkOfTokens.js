@@ -2,26 +2,30 @@ function getToken(string, start, options) {
     var regexp = options.regexp
     var rules = options.rules
     regexp.lastIndex = start
-    var match = regexp.exec(string)
+    var matches = regexp.exec(string)
     var tokens = []
     var next
     var end
     var token
-    if (match) {
-        match = match[1]
-        var value = rules[match]
+    if (matches) {
+        var match = matches[1] || matches[0]
         end = regexp.lastIndex
-        next = end - match.length
-
+        next = end - matches[0].length
         token = {
             next: end
         }
-        if (value[0] === '@') {
-            token.type = 'format'
-            token.value = value.substr(1)
+        if (matches[1]) {
+            var value = rules[match]
+            if (value[0] === '@') {
+                token.type = 'format'
+                token.value = value.substr(1)
+            } else {
+                token.type = 'substitution'
+                token.value = value
+            }
         } else {
-            token.type = 'substitution'
-            token.value = value
+            token.type = 'string'
+            token.value = match[1]
         }
     } else {
         next = string.length
@@ -38,5 +42,6 @@ function getToken(string, start, options) {
     }
     return tokens
 }
+
 
 module.exports = getToken

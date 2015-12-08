@@ -1,8 +1,12 @@
+var substitutionRegexp = /([$?\^\[\].*{}\\])/g
+
 function optionsAdapter(options) {
     var rules = options.rules || {}
     var escape = options.escape || {}
     var prefix = escape.prefix || ''
     var sufix = escape.sufix || ''
+    prefix = prefix.replace(substitutionRegexp, "\\$1")
+    sufix = sufix.replace(substitutionRegexp, "\\$1")
     var keys = Object.keys(rules).filter(function (key) {
         if (/^\w+$/.test(key)) {
             return true
@@ -19,7 +23,7 @@ function optionsAdapter(options) {
                 return b > a ? 1 : -1
             }
         }).join('|')
-        regexp = new RegExp(prefix + '(' + pattern + ')' + sufix, 'g')
+        regexp = new RegExp('\\\\.|' + prefix + '(' + pattern + ')' + sufix, 'g')
     } else {
         throw new Error('Is needed at least one rule')
     }

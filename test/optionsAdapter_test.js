@@ -22,7 +22,7 @@ describe('optionsAdapter', function () {
                 rules: {
                     cc: '@blublu'
                 },
-                regexp: new RegExp('(cc)', 'g')
+                regexp: new RegExp('\\\\.|(cc)', 'g')
             })
         })
     })
@@ -44,20 +44,21 @@ describe('optionsAdapter', function () {
                     bbbb: '@blablablabla',
                     b: '@blo'
                 },
-                regexp: new RegExp('(bbbb|bb|c|b)', 'g')
+                regexp: new RegExp('\\\\.|(bbbb|bb|c|b)', 'g')
             })
         })
     })
 
     describe('given key with name `escape`', function () {
-        it('returns correct format', function () {
+        it('escape.prefix and escape.sufix are used in creation of regexp key', function () {
             var options = {
                 rules: {
                     bb: '@blublu',
                     c: '@foo'
                 },
                 escape: {
-                    prefix: '%'
+                    prefix: '%',
+                    sufix: '$;'
                 }
             }
             expect(optionsAdapter(options)).to.be.deep.equal({
@@ -65,7 +66,7 @@ describe('optionsAdapter', function () {
                     bb: '@blublu',
                     c: '@foo'
                 },
-                regexp: new RegExp('%(bb|c)', 'g')
+                regexp: new RegExp('\\\\.|%(bb|c)\\$;', 'g')
             })
         })
     })
