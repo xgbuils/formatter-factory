@@ -1,18 +1,19 @@
 var substitutionRegexp = /([$?\^\[\].*{}\\])/g
 
-function optionsAdapter(options) {
+function optionsAdapter (options) {
     var rules = options.rules || {}
     var escape = options.escape || {}
     var prefix = escape.prefix || ''
     var sufix = escape.sufix || ''
-    prefix = prefix.replace(substitutionRegexp, "\\$1")
-    sufix = sufix.replace(substitutionRegexp, "\\$1")
+    prefix = prefix.replace(substitutionRegexp, '\\$1')
+    sufix = sufix.replace(substitutionRegexp, '\\$1')
     var keys = Object.keys(rules).filter(function (key) {
         if (/^\w+$/.test(key)) {
             return true
         }
         throw new Error('key `' + key + '`: keys must be composed of alphabetic characters')
     })
+
     var regexp
     if (keys.length > 0) {
         var pattern = keys.sort(function (a, b) {

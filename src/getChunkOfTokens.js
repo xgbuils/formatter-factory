@@ -1,4 +1,4 @@
-function getToken(string, start, options) {
+function getToken (string, start, options) {
     var regexp = options.regexp
     var rules = options.rules
     regexp.lastIndex = start
@@ -42,6 +42,5 @@ function getToken(string, start, options) {
     }
     return tokens
 }
-
 
 module.exports = getToken

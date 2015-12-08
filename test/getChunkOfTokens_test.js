@@ -23,7 +23,7 @@ describe('getChunkOfTokens', function () {
         })
     })
 
-    context('given rules `oo -> @u` and `o -> @i` and string \'fooobaro\'' , function () {
+    context('given rules `oo -> @u` and `o -> @i` and string \'fooobaro\'', function () {
         var string = 'fooobaro'
         var options = {
             rules: {

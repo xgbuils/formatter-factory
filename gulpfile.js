@@ -14,6 +14,9 @@ gulp.task('test', function () {
 
 gulp.task('lint', function () {
     return gulp.src(['./**/*.js'])
-        .pipe(eslint())
+        .pipe(eslint({
+            fix: true
+        }))
         .pipe(eslint.format())
+        .pipe(gulp.dest('./'))
 })

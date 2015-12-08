@@ -16,4 +16,3 @@ function parser (string, options) {
 }
 
 module.exports = parser
-

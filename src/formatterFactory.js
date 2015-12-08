@@ -1,6 +1,6 @@
 var Formatter = require('./formatter')
 
-function FormatterFactory() {
+function FormatterFactory () {
     this.formatters = {}
 }
 

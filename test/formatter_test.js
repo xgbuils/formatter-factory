@@ -3,7 +3,6 @@ var expect = chai.expect
 var Formatter = require('../src/formatter')
 
 describe('Formatter', function () {
-
     context('given configuration and price string builder', function () {
         var priceStringBuilder = givenPriceStringBuilder('.', '$')
         var config = {
@@ -109,7 +108,7 @@ describe('Formatter', function () {
     })
 })
 
-function givenPriceStringBuilder(separator, currency) {
+function givenPriceStringBuilder (separator, currency) {
     var priceStringBuilder = {}
     priceStringBuilder.getIntegerPart = function (price) {
         return Math.floor(price)

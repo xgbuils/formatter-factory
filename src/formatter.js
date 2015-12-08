@@ -1,7 +1,7 @@
 var parser = require('./parser')
 var optionsAdapter = require('./optionsAdapter')
 
-function Formatter(options, stringBuilder) {
+function Formatter (options, stringBuilder) {
     this.options = optionsAdapter(options)
     this.stringBuilder = stringBuilder
 }
