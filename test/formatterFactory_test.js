@@ -2,7 +2,7 @@ var chai = require('chai')
 var expect = chai.expect
 var Formatter = require('../src/formatter')
 
-describe('Formatter', function () {
+describe('FormatterFactory', function () {
     context('given configuration and price string builder', function () {
         var priceStringBuilder = givenPriceStringBuilder('.', '$')
         var config = {

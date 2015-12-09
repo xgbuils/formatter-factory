@@ -1,7 +1,6 @@
 {
     "rules": {
-        "comma-dangle": [2, "never"],
-        
+        "comma-dangle": [2, "never"],        
         "no-console": 2,
         "no-dupe-args": 2,
         "no-dupe-keys": 2,

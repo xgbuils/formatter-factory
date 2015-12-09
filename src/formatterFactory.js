@@ -1,13 +1,25 @@
-var Formatter = require('./formatter')
+var parser = require('./parser')
+var optionsAdapter = require('./optionsAdapter')
 
-function FormatterFactory () {
-    this.formatters = {}
+function Formatter (options, stringBuilder) {
+    this.options = optionsAdapter(options)
+    this.stringBuilder = stringBuilder
 }
 
-FormatterFactory.prototype.getFormatter = function (formatterType) {
-    return this.formatters[formatterType]
+Formatter.prototype.format = function (stringFormat, value) {
+    var tokens = parser(stringFormat, this.options)
+    var self = this
+    return tokens.map(function (token) {
+        if (token.type === 'string') {
+            return token.value
+        } else if (token.type === 'format') {
+            return self.stringBuilder[token.value](value)
+        } else if (token.type === 'substitution') {
+            return self.format(token.value, value)
+        } else {
+            return ''
+        }
+    }).join('')
 }
 
-FormatterFactory.prototype.putFormatter = function (formatterType, options, stringBuilder) {
-    this.formatters[formatterType] = new Formatter(options, stringBuilder)
-}
+module.exports = Formatter

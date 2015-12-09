@@ -1,4 +1,4 @@
-var substitutionRegexp = /([$?\^\[\].*{}\\])/g
+var substitutionRegexp = /([$?|.+*\^\\(){}\[\]])/g
 
 function optionsAdapter (options) {
     var rules = options.rules || {}
@@ -8,7 +8,7 @@ function optionsAdapter (options) {
     prefix = prefix.replace(substitutionRegexp, '\\$1')
     sufix = sufix.replace(substitutionRegexp, '\\$1')
     var keys = Object.keys(rules).filter(function (key) {
-        if (/^\w+$/.test(key)) {
+        if (/^[a-z]\w*$/i.test(key)) {
             return true
         }
         throw new Error('key `' + key + '`: keys must be composed of alphabetic characters')

@@ -70,4 +70,51 @@ describe('optionsAdapter', function () {
             })
         })
     })
+
+    describe('given empty rules', function () {
+        it('throws an exception', function () {
+            var options = {
+                rules: {},
+                escape: {
+                    sufix: '$;'
+                }
+            }
+            expect(function () {
+                optionsAdapter(options)
+            }).to.Throw(Error)
+        })
+    })
+
+    describe('given rules that does not start with alphabetic character', function () {
+        it('throws an exception', function () {
+            var options = {
+                rules: {
+                    '0asd': '@getFoo'
+                },
+                escape: {
+                    sufix: '$;'
+                }
+            }
+            expect(function () {
+                optionsAdapter(options)
+            }).to.Throw(Error)
+        })
+    })
+
+    describe('given rules that has no alphanumeric character', function () {
+        it('throws an exception', function () {
+            var options = {
+                rules: {
+                    'as$d': '@getFoo'
+                },
+                escape: {
+                    prefix: '{',
+                    sufix: '}'
+                }
+            }
+            expect(function () {
+                optionsAdapter(options)
+            }).to.Throw(Error)
+        })
+    })
 })
