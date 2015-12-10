@@ -1,11 +1,11 @@
 var chai = require('chai')
 var expect = chai.expect
-var Formatter = require('../src/formatter')
+var Formatter = require('../src/formatterFactory')
 
 describe('FormatterFactory', function () {
     context('given configuration and price string builder', function () {
         var priceStringBuilder = givenPriceStringBuilder('.', '$')
-        var config = {
+        priceStringBuilder.setConfig({
             rules: {
                 ii: '@getIntegerPart',
                 dd: '@getDecimalPart',
@@ -15,8 +15,8 @@ describe('FormatterFactory', function () {
                 FF: 'ddsii',
                 pp: 'ff c'
             }
-        }
-        var formatter = new Formatter(config, priceStringBuilder)
+        })
+        var formatter = new Formatter(priceStringBuilder)
 
         it('returns "123"', function () {
             expect(formatter.format('ii', 123.34)).to.be.equal('123')
@@ -53,7 +53,7 @@ describe('FormatterFactory', function () {
 
     context('given configuration and price string builder and prefix escape character', function () {
         var priceStringBuilder = givenPriceStringBuilder('.', '$')
-        var config = {
+        priceStringBuilder.setConfig({
             rules: {
                 i: '@getIntegerPart',
                 d: '@getDecimalPart',
@@ -67,8 +67,8 @@ describe('FormatterFactory', function () {
                 prefix: '%',
                 sufix: '['
             }
-        }
-        var formatter = new Formatter(config, priceStringBuilder)
+        })
+        var formatter = new Formatter(priceStringBuilder)
 
         it('returns "123"', function () {
             expect(formatter.format('%i[', 123.34)).to.be.equal('123')
@@ -110,6 +110,13 @@ describe('FormatterFactory', function () {
 
 function givenPriceStringBuilder (separator, currency) {
     var priceStringBuilder = {}
+
+    priceStringBuilder.setConfig = function (config) {
+        this.config = config
+    }
+    priceStringBuilder.getConfig = function () {
+        return this.config
+    }
     priceStringBuilder.getIntegerPart = function (price) {
         return Math.floor(price)
     }

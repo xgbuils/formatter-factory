@@ -7,7 +7,7 @@ gulp.task('test', function () {
         'test/optionsAdapter_test.js',
         'test/getChunkOfTokens_test.js',
         'test/parser_test.js',
-        'test/formatter_test.js'
+        'test/formatterFactory_test.js'
     ])
     .pipe(mocha())
 })

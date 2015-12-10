@@ -1,9 +1,9 @@
 var parser = require('./parser')
 var optionsAdapter = require('./optionsAdapter')
 
-function Formatter (options, stringBuilder) {
-    this.options = optionsAdapter(options)
+function Formatter (stringBuilder) {
     this.stringBuilder = stringBuilder
+    this.options = optionsAdapter(getConfig(stringBuilder))
 }
 
 Formatter.prototype.format = function (stringFormat, value) {
@@ -20,6 +20,14 @@ Formatter.prototype.format = function (stringFormat, value) {
             return ''
         }
     }).join('')
+}
+
+function getConfig (object) {
+    if (!object || typeof object.getConfig !== 'function') {
+        throw new Error('stringBuilder parameter must implement `getConfig` method')
+    } else {
+        return object.getConfig()
+    }
 }
 
 module.exports = Formatter

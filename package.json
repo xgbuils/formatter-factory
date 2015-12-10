@@ -2,7 +2,7 @@
   "name": "formatter-factory",
   "version": "0.1.0",
   "description": "package to create formatters",
-  "main": "index.js",
+  "main": "formatterFactory.js",
   "directories": {
     "test": "test"
   },
