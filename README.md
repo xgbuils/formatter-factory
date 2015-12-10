@@ -37,7 +37,7 @@ var priceFormatter = new FormatterFactory(priceStringBuilder)
 priceFormatter.format('%i is integer part and %d is decimal part', 12.35) 
 // '12 is integer part and 35 is decimal part'
 priceFormatter.format('%f', 12.35) // '12,35'
-priceFormatter.format('%c', 12.35) // '12,35 €'
+priceFormatter.format('%p', 12.35) // '12,35 €'
 priceFormatter.format('<span class="integer-part">%d</span>%s<span class="decimal-part">%d</span>', 12.35) 
 // '<span class="integer-part">12</span>,<span class="decimal-part">35</span>'
 ```
